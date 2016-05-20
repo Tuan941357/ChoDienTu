@@ -94,6 +94,12 @@ public class MainController {
         String price=request.getParameter("price");
         String quantity=request.getParameter("quantity");
         String urlImage=request.getParameter("urlImage");
+        if(urlImage.compareTo("")==0){
+             urlImage=request.getParameter("urlImageOld");          
+        }else{
+            String tg="http://localhost:8080/NewThucTapSpringMVC/upload/";
+            urlImage=tg+urlImage;
+        } 
         String size =request.getParameter("size");
         String description=request.getParameter("description");
         
@@ -158,6 +164,7 @@ public class MainController {
                 break;
             }
             model.put("err", err);
+            if(id.compareTo("")==0 || id==null || id.compareTo("0")==0) myProduct.setMa(1);
             model.put("product", myProduct);
             List<Product> arrlist=new ArrayList<Product>();
             try {
@@ -182,8 +189,7 @@ public class MainController {
         switch(act){
             case "add":
                 try {
-                    String tg="http://localhost:8080/NewThucTapSpringMVC/upload/";
-                    urlImage=tg+urlImage;
+                   
                     myProduct.setUrlImage(urlImage);
                     product_ett obj=new product_ett();
                     myProduct.setCreate(1);
@@ -219,13 +225,6 @@ public class MainController {
                 break;
             case "edit":
                 try {
-                    if(urlImage.compareTo("")==0){
-                        urlImage=request.getParameter("urlImageOld");
-                       
-                    }else{
-                        String tg="http://localhost:8080/NewThucTapSpringMVC/upload/";
-                        urlImage=tg+urlImage;
-                    }
                     myProduct.setUrlImage(urlImage);
                     product_ett obj=new product_ett();
                     myProduct.setUpdate(1);
